@@ -16,7 +16,7 @@ def win?(board, current_player, row, col)
   end
 end
 
-def draw?(board)
+def tie?(board)
   board.flatten.compact.length == 9
 end
 
@@ -69,10 +69,10 @@ begin
   row, col = read_row_and_column(board)
 
   board[row][col] = current_player
-end until win?(board, current_player, row, col) || draw?(board)
+end until win?(board, current_player, row, col) || tie?(board)
 
 if win?(board, current_player, row, col)
   puts "#{current_player} wins!"
-elsif draw?(board)
-  puts "It's a draw!"
+elsif tie?(board)
+  puts "It's a tie!"
 end
