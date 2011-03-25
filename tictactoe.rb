@@ -16,6 +16,10 @@ def win?(board, current_player, row, col)
   end
 end
 
+def draw?(board)
+  board.flatten.compact.length == 9
+end
+
 board   = [[nil,nil,nil],
            [nil,nil,nil],
            [nil,nil,nil]]
@@ -49,7 +53,7 @@ loop do
     exit
   end
 
-  if board.flatten.compact.length == 9
+  if draw?(board)
     puts "It's a draw!"
     exit
   end
