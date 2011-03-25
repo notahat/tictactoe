@@ -19,7 +19,7 @@ class Board
     lines << (0..2).map { |c1| [row, c1] }
     lines << (0..2).map { |r1| [r1, col] }
 
-    win = lines.any? do |line|
+    lines.any? do |line|
       line.all? { |row,col| @board[row][col] == current_player }
     end
   end
