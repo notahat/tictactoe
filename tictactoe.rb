@@ -20,6 +20,10 @@ def draw?(board)
   board.flatten.compact.length == 9
 end
 
+def draw_board(board)
+  puts board.map { |row| row.map { |e| e || " " }.join("|") }.join("\n")
+end
+
 board   = [[nil,nil,nil],
            [nil,nil,nil],
            [nil,nil,nil]]
@@ -32,7 +36,7 @@ row, col = nil
 begin
   current_player = players.next 
 
-  puts board.map { |row| row.map { |e| e || " " }.join("|") }.join("\n")
+  draw_board(board)
   print "\n>> "
   row, col = gets.split.map { |e| e.to_i }
   puts
