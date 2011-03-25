@@ -1,10 +1,24 @@
+def win?(board, current_player, row, col)
+  lines = []
+
+  left_diagonal = [[0,0],[1,1],[2,2]]
+  right_diagonal = [[2,0],[1,1],[0,2]]
+
+  [left_diagonal, right_diagonal].each do |line|
+    lines << line if line.include?([row,col])
+  end
+
+  lines << (0..2).map { |c1| [row, c1] }
+  lines << (0..2).map { |r1| [r1, col] }
+
+  win = lines.any? do |line|
+    line.all? { |row,col| board[row][col] == current_player }
+  end
+end
+
 board   = [[nil,nil,nil],
            [nil,nil,nil],
            [nil,nil,nil]]
-
-left_diagonal = [[0,0],[1,1],[2,2]]
-right_diagonal = [[2,0],[1,1],[0,2]]
-
 
 players = [:X, :O].cycle
 
@@ -30,20 +44,7 @@ loop do
 
   board[row][col] = current_player
 
-  lines = []
-
-  [left_diagonal, right_diagonal].each do |line|
-    lines << line if line.include?([row,col])
-  end
-
-  lines << (0..2).map { |c1| [row, c1] }
-  lines << (0..2).map { |r1| [r1, col] }
-
-  win = lines.any? do |line|
-    line.all? { |row,col| board[row][col] == current_player }
-  end
-
-  if win
+  if win?(board, current_player, row, col)
     puts "#{current_player} wins!"
     exit
   end
