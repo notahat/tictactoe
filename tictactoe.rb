@@ -26,7 +26,10 @@ board   = [[nil,nil,nil],
 
 players = [:X, :O].cycle
 
-loop do
+current_player = nil
+row, col = nil
+
+begin
   current_player = players.next 
 
   puts board.map { |row| row.map { |e| e || " " }.join("|") }.join("\n")
@@ -47,15 +50,12 @@ loop do
   end
 
   board[row][col] = current_player
+end until win?(board, current_player, row, col) || draw?(board)
 
-  if win?(board, current_player, row, col)
-    puts "#{current_player} wins!"
-    exit
-  end
-
-  if draw?(board)
-    puts "It's a draw!"
-    exit
-  end
+if win?(board, current_player, row, col)
+  puts "#{current_player} wins!"
 end
 
+if draw?(board)
+  puts "It's a draw!"
+end
