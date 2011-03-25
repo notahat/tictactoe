@@ -24,35 +24,31 @@ def draw_board(board)
   puts board.map { |row| row.map { |e| e || " " }.join("|") }.join("\n")
 end
 
-def cell_set?(board, row, col)
+def row_and_column_valid?(row, col)
+  [0, 1, 2].include?(row) && [0, 1, 2].include?(col)
+end
+
+def cell_occupied?(board, row, col)
   !board.fetch(row).fetch(col).nil?
 end
 
 def read_row_and_column(board)
-  is_valid = false
   row, col = nil
 
-  until is_valid
+  begin
     print "\n>> "
     row, col = gets.split.map { |e| e.to_i }
 
-    is_valid = true
-
-    begin
-      cell_contents = board.fetch(row).fetch(col)
-    rescue IndexError
+    if !row_and_column_valid?(row, col)
       puts "Out of bounds, try another position"
-      is_valid = false
-    end
-    
-    if cell_contents
+    elsif cell_occupied?(board, row, col)
       puts "Cell occupied, try another position"
-      is_valid = false
-    end    
-  end
+    end
+  end until row_and_column_valid?(row, col) && !cell_occupied?(board, row, col)
 
   return row, col
 end
+
 
 
 
@@ -77,8 +73,6 @@ end until win?(board, current_player, row, col) || draw?(board)
 
 if win?(board, current_player, row, col)
   puts "#{current_player} wins!"
-end
-
-if draw?(board)
+elsif draw?(board)
   puts "It's a draw!"
 end
